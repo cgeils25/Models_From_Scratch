@@ -298,3 +298,4 @@ class LogisticRegressionModel():
         """
         self._validate_X_y(X, None)
         return self._sigmoid(np.dot(X, self.w) + self.b)
+    
