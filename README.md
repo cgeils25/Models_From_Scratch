@@ -4,4 +4,4 @@ To be clear, by "from scratch", I mean that I'm only allowed to use basic additi
 
 My motivation for doing this is both to deepen my understanding of relevant theory as well as strengthening my python data science skillset.
 
-Currently, I've completed Logistic Regression, and I plan to try and implement a support vector machine next. 
+Currently, I've completed Logistic Regression, and I plan to build a support vector machine next. 
