@@ -5,3 +5,5 @@ This project started with me goofing around in a colab notebook, and turned out 
 I used 4 algorithms as solvers: batch gradient descent, mini-batch gradient descent, stochastic gradient descent, and stochastic average gradient. 
 
 My implementation achieves nearly identical loss and accuracy but is pretty slow compared to scikit-learn (about 200x), but hey, a model is a model :\)
+
+I think what I've learned with this project will be very helpful for my machine learning research, as it's forced my to understand some of the mathematics and theory behind ML which I'm otherwise able to get away with not really understanding when I can just do loss.backward() and optimizer.step()
