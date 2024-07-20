@@ -32,13 +32,22 @@ def split_dataset(X, y, test_size=0.2, shuffle=True):
     return X_train, y_train, X_test, y_test
 
 class LogisticRegressionModel():
-    def __init__(self, num_features):
-        self.num_features = num_features
-        self.b = np.random.rand(1)
-        self.w = np.random.rand(num_features)
-        self.params = {'w': self.w, 'b': self.b}
+    class LogisticRegressionModel:
+        def __init__(self, num_features):
+            """
+            This class represents a Logistic Regression model. It is used to classify binary
+            outcomes based on a set of input features. 
+
+            Args:
+                num_features (int): The number of features in the feature matrix.
+            """
+            self.num_features = num_features
+            self.b = np.random.rand(1)
+            self.w = np.random.rand(num_features)
+            self.params = {'w': self.w, 'b': self.b}
 
     def _validate_X_y(self, X=None, y=None):
+        # validate input data
         if X is not None:
           if not isinstance(X, np.ndarray):
               raise TypeError('X must be a numpy array')
@@ -78,10 +87,6 @@ class LogisticRegressionModel():
         y_hat[negative_mask] = exp_z / (1 + exp_z)
 
         return y_hat
-
-    def _cross_entropy(self, y, y_hat):
-        # do I even need this function?
-        return -np.mean(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))
 
     def _cross_entropy_stable(self, y, z, stable_threshold=20):
         # Takes in raw logits
@@ -202,6 +207,26 @@ class LogisticRegressionModel():
 
 
     def fit(self, X, y, solver='SGD', num_iterations=25_000, shuffle=True, lr=0.1, lr_decay_rate=0.9999):
+        """Fit model to data
+
+        Available solvers : 'GD', 'MBGD', 'SGD', 'SAG'
+        'GD' : Gradient Descent
+        'MBGD' : Mini-Batch Gradient Descent (batch size = 10)
+        'SGD' : Stochastic Gradient Descent
+        'SAG' : Stochastic Average Gradient
+
+        Args:
+            X (np.ndarray): feature matrix
+            y (np.ndarray): target vector
+            solver (str, optional): solver to use to fit model to data. Defaults to 'SGD'.
+            num_iterations (int, optional): number of training iterations. Defaults to 25_000.
+            shuffle (bool, optional): shuffle data before fitting. Defaults to True.
+            lr (float, optional): learning rate. Defaults to 0.1.
+            lr_decay_rate (float, optional): exponential learning rate decay. Computed each iteration as lr *= lr_decay_rate. Defaults to 0.9999.
+
+        Raises:
+            ValueError: if solver is not one of 'GD', 'MBGD', 'SGD', 'SAG'
+        """
         self._validate_X_y(X, y)
 
         if shuffle:
@@ -223,7 +248,15 @@ class LogisticRegressionModel():
             raise ValueError(f'"{solver}" is not a valid solver. Choose one of "GD", "MBGD", "SGD", or "SAG"')
 
     def loss(self, X, y):
-        # cross entropy loss
+        """Compute cross entropy loss
+
+        Args:
+            X (np.ndarray): feature matrix
+            y (np.ndarray): target vector
+
+        Returns:
+            float: cross entropy loss
+        """
         self._validate_X_y(X, y)
 
         z = np.dot(X, self.w) + self.b
@@ -231,6 +264,15 @@ class LogisticRegressionModel():
         return cross_entropy_loss.mean()
 
     def accuracy(self, X, y):
+        """Compute model accuracy
+
+        Args:
+            X (np.ndarray): feature matrix
+            y (np.ndarray): target vector
+
+        Returns:
+            float: model accuracy
+        """
         self._validate_X_y(X, y)
 
         y_hat = self.__call__(X)
@@ -246,5 +288,13 @@ class LogisticRegressionModel():
         return p_correct
 
     def __call__(self, X):
+        """Make predictions
+
+        Args:
+            X (np.ndarray): feature matrix of shape (num_samples, num_features)
+
+        Returns:
+            np.ndarray: predictions, in range [0, 1]
+        """
         self._validate_X_y(X, None)
         return self._sigmoid(np.dot(X, self.w) + self.b)
