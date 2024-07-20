@@ -1,6 +1,6 @@
 This directory contains my implementation of logistic regression. You can view the model in logistic_regression_model.py. I applied my model to 4 toy datasets (generated using a fake model with some added noise). Lastly, I used it to predict whether a patient has diabetes based on several key features. 
 
-This project started with me goofing around in a colab notebook, and turned out to be a very interesting lesson in how to derive numerically stable forms of sigmoid and cross entropy (resistant to overflow and trying to take log(0)). Who would've thought I'd be back to doing algebra by hand?
+This project started with me goofing around in a colab notebook, and turned out to be a very interesting lesson in how to derive numerically stable forms of sigmoid and cross entropy (resistant to overflow and underflow). Who would've thought I'd be back to doing algebra by hand?
 
 I used 4 algorithms as solvers: batch gradient descent, mini-batch gradient descent, stochastic gradient descent, and stochastic average gradient. I found that SGD was the most efficient. 
 
