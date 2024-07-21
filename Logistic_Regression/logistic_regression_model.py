@@ -32,19 +32,18 @@ def split_dataset(X, y, test_size=0.2, shuffle=True):
     return X_train, y_train, X_test, y_test
 
 class LogisticRegressionModel():
-    class LogisticRegressionModel:
-        def __init__(self, num_features):
-            """
-            This class represents a Logistic Regression model. It is used to classify binary
-            outcomes based on a set of input features. 
+    def __init__(self, num_features):
+        """
+        This class represents a Logistic Regression model. It is used to classify binary
+        outcomes based on a set of input features. 
 
-            Args:
-                num_features (int): The number of features in the feature matrix.
-            """
-            self.num_features = num_features
-            self.b = np.random.rand(1)
-            self.w = np.random.rand(num_features)
-            self.params = {'w': self.w, 'b': self.b}
+        Args:
+            num_features (int): The number of features in the feature matrix.
+        """
+        self.num_features = num_features
+        self.b = np.random.rand(1)
+        self.w = np.random.rand(num_features)
+        self.params = {'w': self.w, 'b': self.b}
 
     def _validate_X_y(self, X=None, y=None):
         # validate input data
