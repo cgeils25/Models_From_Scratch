@@ -7,7 +7,9 @@ I started with the standard formulas for sigmoid and binary cross entropy as fol
 
 $$
 \sigma(z) = \frac{1}{1 + e^{-z}}
-\\[10pt]
+$$
+and 
+$$
 L(y, \hat{y}) = -y \log(\hat{y}) - (1-y) \log(1-\hat{y})
 $$
 
