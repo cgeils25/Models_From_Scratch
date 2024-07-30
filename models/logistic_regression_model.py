@@ -2,35 +2,6 @@ import numpy as np
 from tqdm import tqdm
 import warnings
 
-def split_dataset(X, y, test_size=0.2, shuffle=True):
-    """Split dataset into training and testing sets
-
-    Args:
-        X (np.ndarray): feature matrix
-        y (np.ndarray): target vector
-        test_size (float, optional): percentage of data to be used for testing. Defaults to 0.2.
-        shuffle (bool, optional): shuffle data before splitting. Defaults to True.
-
-    Returns:
-        tuple[np.ndarray]: X_train, y_train, X_test, y_test
-    """
-    conjoined = np.concatenate([X, y.reshape(-1, 1)], axis=1)
-
-    if shuffle:
-        np.random.shuffle(conjoined)
-
-    split_idx = int(X.shape[0] * (1 - test_size))
-    conjoined_train = conjoined[:split_idx]
-    conjoined_test = conjoined[split_idx:]
-
-    X_train = conjoined_train[:, :-1]
-    y_train = conjoined_train[:, -1]
-
-    X_test = conjoined_test[:, :-1]
-    y_test = conjoined_test[:, -1]
-
-    return X_train, y_train, X_test, y_test
-
 class LogisticRegressionModel():
     def __init__(self, num_features):
         """
