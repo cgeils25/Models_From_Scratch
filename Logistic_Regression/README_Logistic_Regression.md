@@ -1,4 +1,4 @@
-This directory contains my implementation of logistic regression. You can view the model [here](logistic_regression_model.py). I started by [applying my model to 4 toy datasets](toy_datasets_logistic_regression.ipynb). Lastly, I used it to [predict whether a patient has diabetes based on several key features](diabetes_prediction.ipynb). 
+This directory contains my implementation of logistic regression. You can view the model [here](../models/logistic_regression_model.py). I started by [applying my model to 4 toy datasets](toy_datasets_logistic_regression.ipynb). Lastly, I used it to [predict whether a patient has diabetes based on several key features](diabetes_prediction.ipynb). 
 
 
 This project started with me goofing around in a colab notebook, and turned out to be a very interesting lesson in how to derive numerically stable forms of sigmoid and cross entropy (resistant to overflow and underflow). Who would've thought I'd be back to doing algebra by hand?
