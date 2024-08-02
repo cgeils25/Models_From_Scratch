@@ -8,4 +8,6 @@ Would I ever use these models in practice? Definitely not, as my implementations
 
 All models will have their own directories, named accordingly, along with a readme explaining the project and what I learned.
 
+I'll also write unit tests for all models and utility functions using pytest. They will be contained in tests/ and will mirror the structure of the project.
+
 Currently, I've completed Logistic Regression, and I plan to build a support vector machine next. 
