@@ -33,10 +33,10 @@ def test_LogisticRegressionModel():
             model.fit(X, y, solver=solver)
 
         for model in log_reg_models:
-            assert model.w.shape == (2, )
+            assert model.w.shape == (X.shape[1], )
 
             y_hat = model(X)
-            assert y_hat.shape == (5, )
+            assert y_hat.shape == (X.shape[0], )
             assert np.all(y_hat >= 0) and np.all(y_hat <= 1)
 
             accuracy = model.accuracy(X, y)
