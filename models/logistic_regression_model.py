@@ -15,6 +15,7 @@ class LogisticRegressionModel():
         self.b = np.random.rand(1)
         self.w = np.random.rand(num_features)
         self.params = {'w': self.w, 'b': self.b}
+        self.solvers = ['GD', 'SGD', 'MBGD', 'SAG']
 
     def _validate_X_y(self, X=None, y=None):
         # validate input data
@@ -36,7 +37,7 @@ class LogisticRegressionModel():
               raise TypeError('y must be a numpy array')
           if len(y.shape) != 1:
               raise ValueError(f'y must be a 1D array of shape (num_samples, ), instead got {y.shape}')
-          if not np.all(np.in1d(y, [0, 1])):
+          if not np.all(np.isin(y, [0, 1])):
             raise ValueError("all values of y must be either 0 or 1. We don't do multiclass here")
 
         if y is not None and X is not None:
@@ -206,7 +207,9 @@ class LogisticRegressionModel():
             self._fit_gd(X, y, num_iterations, lr, lr_decay_rate)
 
         elif solver == "MBGD":
-            self._fit_bgd(X, y, 10, num_iterations, lr, lr_decay_rate)
+            # in case num_samples < 10
+            batch_size = np.min([X.shape[0], 10])
+            self._fit_bgd(X, y, batch_size, num_iterations, lr, lr_decay_rate)
 
         elif solver == "SGD":
             self._fit_bgd(X, y, 1, num_iterations, lr, lr_decay_rate)
