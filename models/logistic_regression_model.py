@@ -3,7 +3,7 @@ from tqdm import tqdm
 import warnings
 
 class LogisticRegressionModel():
-    def __init__(self, num_features):
+    def __init__(self):
         """
         This class represents a Logistic Regression model. It is used to classify binary
         outcomes based on a set of input features. 
@@ -11,9 +11,10 @@ class LogisticRegressionModel():
         Args:
             num_features (int): The number of features in the feature matrix.
         """
-        self.num_features = num_features
-        self.b = np.random.rand(1)
-        self.w = np.random.rand(num_features)
+        self.fitted = False
+        self.num_features = None
+        self.b = None
+        self.w = None
         self.params = {'w': self.w, 'b': self.b}
         self.solvers = ['GD', 'SGD', 'MBGD', 'SAG']
 
@@ -147,7 +148,6 @@ class LogisticRegressionModel():
 
     def _fit_sag(self, X, y, num_iterations, lr, lr_decay_rate):
         # stochastic average gradient
-
         num_samples = X.shape[0]
 
         # memory of all gradients for each training sample
@@ -198,6 +198,12 @@ class LogisticRegressionModel():
         Raises:
             ValueError: if solver is not one of 'GD', 'MBGD', 'SGD', 'SAG'
         """
+        self.num_features = X.shape[1]
+
+        # initialize weights and biases
+        self.w = np.random.randn(self.num_features)
+        self.b = np.random.randn(1)
+
         self._validate_X_y(X, y)
 
         if shuffle:
@@ -219,6 +225,8 @@ class LogisticRegressionModel():
 
         else:
             raise ValueError(f'"{solver}" is not a valid solver. Choose one of "GD", "MBGD", "SGD", or "SAG"')
+        
+        self.fitted = True
 
     def loss(self, X, y):
         """Compute cross entropy loss
@@ -230,6 +238,9 @@ class LogisticRegressionModel():
         Returns:
             float: cross entropy loss
         """
+        if self.fitted == False:
+            raise ValueError('Model must be fitted before computing loss')
+        
         self._validate_X_y(X, y)
 
         z = np.dot(X, self.w) + self.b
@@ -246,6 +257,9 @@ class LogisticRegressionModel():
         Returns:
             float: model accuracy
         """
+        if self.fitted == False:
+            raise ValueError('Model must be fitted before computing accuracy')
+
         self._validate_X_y(X, y)
 
         y_hat = self.__call__(X)
@@ -269,6 +283,10 @@ class LogisticRegressionModel():
         Returns:
             np.ndarray: predictions, in range [0, 1]
         """
+        if self.fitted == False:
+            raise ValueError('Model must be fitted before making predictions')
+        
         self._validate_X_y(X, None)
+
         return self._sigmoid(np.dot(X, self.w) + self.b)
     
