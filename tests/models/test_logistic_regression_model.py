@@ -18,12 +18,12 @@ all_y = [y_param, y_all_neg, y_all_pos]
 
 def test_LogisticRegressionModel():
     # get all solvers
-    dummy_model = LogisticRegressionModel(num_features=0)
+    dummy_model = LogisticRegressionModel()
     solvers = dummy_model.solvers
     del dummy_model
 
     for y in all_y:
-        log_reg_models = [LogisticRegressionModel(num_features=X.shape[1]) for _ in solvers]
+        log_reg_models = [LogisticRegressionModel() for _ in solvers]
 
         for solver, model in zip(solvers, log_reg_models):
             # to eliminate randomness in params
