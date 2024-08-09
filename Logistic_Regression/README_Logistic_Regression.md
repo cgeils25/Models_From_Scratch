@@ -19,7 +19,7 @@ However, when trying to optimize, I continually ran into errors. I assumed it ha
 
 However, the problem persisted. It took me a lot of plotting and analyzing gradient and output values to realize what was happening: my model was producing outputs that were so confident (high logits with y-hats very close to 0 or 1) that numerical precision error was kicking in, and I was ending up either dividing by 0, taking the log of 0, or simply with +/- infinity courtesy of e^(-z).
 
-To solve this problem, I obtained the following derivation which combines binary cross entropy and sigmoid to create version that takes raw logits (z) as its input (yeah, I could have just looked it up, but what would that teach me...):
+To solve this problem, I obtained the following derivation which combines binary cross entropy and sigmoid to create a version that takes raw logits (z) as its input (yeah, I could have just looked it up, but what would that teach me...):
 
 $$
 L(y, z) = \log(e^{z}+1) - yz
