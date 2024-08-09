@@ -5,11 +5,7 @@ import warnings
 class LogisticRegressionModel():
     def __init__(self):
         """
-        This class represents a Logistic Regression model. It is used to classify binary
-        outcomes based on a set of input features. 
-
-        Args:
-            num_features (int): The number of features in the feature matrix.
+        This class represents a Logistic Regression model. It is currently supported for binary classification with an arbitrary number of features. 
         """
         self.fitted = False
         self.num_features = None
