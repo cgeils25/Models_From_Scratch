@@ -43,5 +43,3 @@ def test_LogisticRegressionModel():
 
             accuracy = model.accuracy(X, y)
             assert accuracy == 1.0
-
-            print(model.loss(X, y))
