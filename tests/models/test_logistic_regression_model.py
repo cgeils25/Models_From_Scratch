@@ -22,7 +22,9 @@ def test_LogisticRegressionModel():
     solvers = dummy_model.solvers
     del dummy_model
 
+    # test all targets
     for y in all_y:
+
         log_reg_models = [LogisticRegressionModel() for _ in solvers]
 
         for solver, model in zip(solvers, log_reg_models):
