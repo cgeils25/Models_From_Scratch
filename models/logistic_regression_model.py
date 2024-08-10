@@ -173,7 +173,7 @@ class LogisticRegressionModel():
             lr *= lr_decay_rate
 
 
-    def fit(self, X, y, solver='SGD', num_iterations=25_000, shuffle=True, lr=0.1, lr_decay_rate=0.9999):
+    def fit(self, X: np.ndarray, y: np.ndarray, solver='SGD', num_iterations=25_000, shuffle=True, lr=0.1, lr_decay_rate=0.9999):
         """Fit model to data
 
         Available solvers : 'GD', 'MBGD', 'SGD', 'SAG'
@@ -224,7 +224,7 @@ class LogisticRegressionModel():
         
         self.fitted = True
 
-    def loss(self, X, y):
+    def loss(self, X: np.ndarray, y: np.ndarray):
         """Compute cross entropy loss
 
         Args:
@@ -243,7 +243,7 @@ class LogisticRegressionModel():
         cross_entropy_loss = self._cross_entropy_stable(y, z)
         return cross_entropy_loss.mean()
 
-    def accuracy(self, X, y):
+    def accuracy(self, X: np.ndarray, y: np.ndarray):
         """Compute model accuracy
 
         Args:
@@ -270,7 +270,7 @@ class LogisticRegressionModel():
 
         return p_correct
 
-    def __call__(self, X):
+    def __call__(self, X: np.ndarray):
         """Make predictions
 
         Args:
