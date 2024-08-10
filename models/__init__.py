@@ -1,1 +1,2 @@
 from .logistic_regression_model import LogisticRegressionModel
+from .support_vector_machine import SupportVectorMachine
