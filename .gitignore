@@ -4,3 +4,4 @@ __pycache__/
 notes
 svm_scratch.ipynb
 .pytest_cache/
+svm_junk/
