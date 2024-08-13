@@ -403,7 +403,7 @@ Necessarily requires that we evaluate the kernel function $K$ for all pairs of s
 
 ## Applying it to a toy dataset
 
-Ok, now for the fun part: applying the model to data. [My implementation uses NumPy and fits into just over 300 lines of (not very compact) python](../models/support_vector_machine.py).
+Ok, now for the fun part: applying the model to data. [My implementation uses NumPy and fits into ~350 lines of (not very compact) python](../models/support_vector_machine.py).
 
 On a toy dataset, we can view the progression and final result of SMO:
 
