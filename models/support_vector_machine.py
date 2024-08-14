@@ -1,6 +1,6 @@
 import numpy as np
 
-# utils
+# had problems with numerical precision, so needed these
 def is_greater_or_close(a, b, rtol=1e-5, atol=1e-8):
     return np.logical_or(a > b, np.isclose(a, b, rtol=rtol, atol=atol))
 
@@ -9,6 +9,14 @@ def is_less_or_close(a, b, rtol=1e-5, atol=1e-8):
 
 class SupportVectorMachine():
     def __init__(self, task='classification'):
+        """A support vector machine model. Currently only supports binary classification with linear kernel.
+
+        Args:
+            task (str, optional): model task. Defaults to 'classification'.
+
+        Raises:
+            ValueError: if task not supported (only 'classification' available currently.)
+        """
         self.valid_kernels = ['linear']
         self.valid_tasks = ['classification']
 
@@ -129,7 +137,7 @@ class SupportVectorMachine():
         return y_hat
 
     def _get_kernel(self, x1, x2, kernel_type = 'linear'):
-        # phi = feature mapping
+        # kernel function. works for individual samples or matrices of samples
         if kernel_type == 'linear':
             return np.dot(x1, x2.T)
 
