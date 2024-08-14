@@ -1,6 +1,6 @@
 # Note
 
-For some reason, github seems to not display my LATEX correclty. If the same is happening for anyone reading this, I've included a PDF version which you can view by [clicking here](README_svm.pdf).
+For some reason, github seems to not display my LATEX correctly. If the same is happening for anyone reading this, I've included a PDF version which you can view by [clicking here](README_svm.pdf).
 
 # Building a Support Vector Machine From Scratch
 Okay, so this one turned out to be much, much trickier than I had anticipated. I'll give a somewhat high-level explanation of the math behind support vector machines and the logic of sequential minimal optimization. Then, I'll go through how I applied it to a real classification problem. 
