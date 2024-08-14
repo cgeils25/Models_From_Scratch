@@ -1,3 +1,7 @@
+# Side Note
+
+For some reason, github seems to not display my LATEX correclty. If the same is happening for anyone reading this, I've included an HTML version which you can view by [clicking here](README_svm.html){:target="_blank"}.
+
 # Building a Support Vector Machine From Scratch
 Okay, so this one turned out to be much, much trickier than I had anticipated. I'll give a somewhat high-level explanation of the math behind support vector machines and the logic of sequential minimal optimization. Then, I'll go through how I applied it to a real classification problem. 
 
@@ -418,7 +422,11 @@ You can view the IPython notebook [here](toy_datasets_svm.ipynb).
 
 ## Classifying Credit Default Risk
 
-Finally, I applied my model to a real-world dataset predicting credit card users' risk of defaulting based on their age, income, loan amount, and loan-to-income ratio. It's a little hard to represent this model visually, so I'll just say that with a train/test split of 80/20, my model matched the performance of scikit-learn and achieved a test accuracy of 94.75%. You can check out the notebook [here](credit_default_classification.ipynb). 
+Finally, I applied my model to a real-world dataset predicting credit card users' risk of defaulting based on their age, income, loan amount, and loan-to-income ratio. It's a little hard to represent this model visually, so I'll just say that with a train/test split of 80/20, my model matched the performance of scikit-learn and achieved a test accuracy of 94.75%. You can check out the notebook [here](credit_default_classification.ipynb). Also, I did construct a confusion matrix, which helps to show that the model correctly classifies both classes
+
+![svm confusion matrix](images/credit_default_svm_confusion_mat.png)
+
+
 
 Also, I wanted to make a note of this: When trying to model this dataset, I encountered severe underperformance initially. I tried varying C and the number of training iterations, but nothing seemed to work. It took a lot of plotting and stepping through my code with a debugger to realize the issue.
 
