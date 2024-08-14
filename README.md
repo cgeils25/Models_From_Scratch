@@ -10,4 +10,4 @@ All models will have their own directories, named accordingly, along with a read
 
 I'll also write unit tests for all models and utility functions using pytest. They will be contained in tests/ and will mirror the structure of the project.
 
-Currently, I've completed logistic regression and a linear support vector machine, and I'm currently working on linear regression.
+I've completed logistic regression and a linear support vector machine, and I'm working on linear regression.
