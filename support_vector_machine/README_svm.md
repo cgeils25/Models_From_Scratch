@@ -1,4 +1,4 @@
-# Side Note
+# Note
 
 For some reason, github seems to not display my LATEX correclty. If the same is happening for anyone reading this, I've included a PDF version which you can view by [clicking here](README_svm.pdf).
 
