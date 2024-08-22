@@ -5,7 +5,7 @@ import warnings
 class LogisticRegressionModel():
     def __init__(self):
         """
-        This class represents a Logistic Regression model. It is currently supported for binary classification with an arbitrary number of features. 
+        A Logistic Regression model. Currently only supported for binary classification with an arbitrary number of features. 
         """
         self.fitted = False
         self.num_features = None
