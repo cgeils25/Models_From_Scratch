@@ -7,7 +7,7 @@ class PCA:
 
         Args:
             num_components (int, optional): number of principle components to keep. Defaults to None.
-            p_variance (float, optional): minimum variance captured by components. Must be in range [0, 1]. Defaults to None.
+            p_variance (float, optional): minimum proportion of total variance captured by components. Must be in range [0, 1]. Defaults to None.
 
         Raises:
             ValueError: if pass in neither num_components nor p_variance or both
@@ -15,7 +15,7 @@ class PCA:
         """
         # p_variance will be minimum variance captured by components
         if sum(arg == None for arg in (num_components, p_variance)) != 1:
-            raise ValueError('must pass in one (and only one) of num_components, p_variance')
+            raise ValueError('must pass as arguments one (and only one) of num_components, p_variance')
         
         if num_components is not None and num_components < 1:
             raise ValueError('num_components must be greater than 0')
@@ -70,7 +70,7 @@ class PCA:
         sorted_eigenval_idx = np.argsort(eigenvalues)[::-1]
 
         eigenvalues = eigenvalues[sorted_eigenval_idx]
-        eigenvectors = eigenvectors[sorted_eigenval_idx]
+        eigenvectors = eigenvectors[:, sorted_eigenval_idx] # because eigenvectors are columns. This bug took so fucking long to find
 
         if self.num_components:
             self.components = eigenvectors[:, :self.num_components]
@@ -158,7 +158,7 @@ class PCA:
         self._validate_X(X_transformed)
             
         # project back onto original space
-        X_original = X_transformed @ self.components.T + self.mean
-        # we can do this because the components are orthogonal, so components @ components.T = I (identity matrix)
+        X_original = (X_transformed @ self.components.T) + self.mean
+        # we can do this because the components are orthogonal, so components.T @ components = I (identity matrix)
 
         return X_original
