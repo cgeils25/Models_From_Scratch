@@ -6,7 +6,7 @@ Would I ever use these models in practice? Definitely not, as my implementations
 
 Because my models only use basic matrix operations via NumPy, I would like to eventually write my own low-level replacement (with an identical API) in either C or Rust which I can substitute in, so that this will truly be "from scratch". 
 
-All models will have their own directories, named accordingly, along with a readme explaining the project and what I learned.
+You can see how I've applied each model to real and toy datasets along with their respective READMEs in 'notebooks_and_readmes'. The source code for models can be seen in 'models', and their corresponding unit tests can be found in 'tests'. 
 
 I'll also write unit tests for all models and utility functions using pytest. They will be contained in tests/ and will mirror the structure of the project.
 
