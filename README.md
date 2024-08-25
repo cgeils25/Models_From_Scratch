@@ -10,9 +10,9 @@ Would I ever use these models in practice? Definitely not, as my implementations
 # No NumPy someday?
 Because my models only use basic matrix operations via NumPy, I would like to eventually write my own low-level replacement (with an identical API) in either C or Rust which I can substitute in, so that this will truly be "from scratch". 
 
-# Project Structure
-You can see how I've applied each model to real and toy datasets along with their respective READMEs in 'notebooks_and_readmes'. The source code for models can be seen in 'models', and their corresponding unit tests can be found in 'tests'. 
-
 # Testing
-I'll also write unit tests for all models and utility functions using pytest. They will be contained in tests/ and will mirror the structure of the project.
+I'll also write unit tests for all models and utility functions using pytest. My basic approach for writing these tests is to define use cases which I know to be mathematically true (ex. a singular matrix has a condition number of infinity / Nan), and then check that my code satisfies them.
+
+# Project Structure
+You can see how I've applied each model to real and toy datasets along with their respective READMEs in 'notebooks_and_readmes'. The source code for models can be seen in 'models', and their corresponding unit tests can be found in 'tests'. For tests, the structure will mirror the structure of the project as a whole (ex. the unit tests for models are found in tests/models). 
 
