@@ -1,6 +1,8 @@
 # Intro
 Hello! This repo will be a collection of exercises in which I'll implement different classical machine learning algorithms from scratch, and then apply these models to both toy and real-world datasets.
 
+![models from scratch intro image](notebooks_and_readmes/linear_regression/images/models_from_scratch_intro.png)
+
 # Why ?
 My motivation for doing this is both to deepen my understanding of ML math theory as well as strengthening my python data science skillset. This also helps me gain a better intuition for how to translate academic papers into usable code.
 
