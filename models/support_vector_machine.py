@@ -73,8 +73,7 @@ class SupportVectorMachine():
                 raise ValueError('y must not contain any NaN values')
             if np.any(np.isinf(y)):
                 raise ValueError('y must not contain any infinite values')
-            if self.task == 'classification':
-                if not np.all(np.isin(y, [-1, 1])):
+            if self.task == 'classification' and not np.all(np.isin(y, [-1, 1])):
                     raise ValueError('y values must be binary and in set {-1, 1} for classification')
 
         if X is not None and y is not None:
