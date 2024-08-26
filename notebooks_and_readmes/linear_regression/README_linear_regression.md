@@ -107,7 +107,7 @@ $$
 \kappa = \frac{\lambda_{max}}{\lambda_{min}}
 $$
 
-Thus, a high condition number indicates that a matrix is ill-conditioned, and thus finding and inverse may result in imprecision.
+Thus, a high condition number indicates that a matrix is ill-conditioned, and finding and inverse will result in imprecision.
 
 We can roughly quantify this imprecision:
 
