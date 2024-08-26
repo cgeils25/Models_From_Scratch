@@ -6,3 +6,4 @@ svm_scratch.ipynb
 .pytest_cache/
 svm_junk/
 linreg_junk/
+notebooks_and_readmes/linear_regression/datasets/roboBohr.csv
