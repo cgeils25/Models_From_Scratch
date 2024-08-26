@@ -70,7 +70,7 @@ class PCA:
         sorted_eigenval_idx = np.argsort(eigenvalues)[::-1]
 
         eigenvalues = eigenvalues[sorted_eigenval_idx]
-        eigenvectors = eigenvectors[:, sorted_eigenval_idx] # because eigenvectors are columns. This bug took so fucking long to find
+        eigenvectors = eigenvectors[:, sorted_eigenval_idx] # because eigenvectors are columns. This bug took so fucking long to find (used to be just [sorted_eigenval_idx])
 
         if self.num_components:
             self.components = eigenvectors[:, :self.num_components]
@@ -118,8 +118,7 @@ class PCA:
         self._validate_X(X)
 
         # input validation; doesn't make sense to have it in _validate_X because of inverse_transform
-        if self.components is not None:
-            if X.shape[1] != self.components.shape[0]:
+        if self.components is not None and X.shape[1] != self.components.shape[0]:
                 raise ValueError(f'mismatch between number of features in X ({X.shape[1]}) and number of components ({self.components.shape[0]})')
         
         # center X and project onto principal components
