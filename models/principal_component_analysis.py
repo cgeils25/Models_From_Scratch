@@ -43,7 +43,7 @@ class PCA:
         if np.any(np.isinf(X)):
             raise ValueError('X contains inf values')
 
-    def fit(self, X):   
+    def fit(self, X: np.ndarray):   
         """Fit PCA model to input data
 
         Args:
@@ -100,7 +100,7 @@ class PCA:
         # components are eigenvectors and should be orthogonal
         assert np.isclose(self.components.T @ self.components, np.eye(self.components.shape[1])).all(), 'components not orthogonal'
 
-    def transform(self, X):
+    def transform(self, X: np.ndarray):
         """Transforms input data into principal component space
 
         Args:
@@ -126,7 +126,7 @@ class PCA:
 
         return X_transformed
 
-    def fit_transform(self, X):
+    def fit_transform(self, X: np.ndarray):
         """Fit PCA model and transform input data
 
         Args:
@@ -139,7 +139,7 @@ class PCA:
 
         return self.transform(X)
     
-    def inverse_transform(self, X_transformed):
+    def inverse_transform(self, X_transformed: np.ndarray):
         """Transforms principal component space back to original space
 
         Args:
@@ -155,6 +155,10 @@ class PCA:
             raise ValueError('pca not yet fitted')
         
         self._validate_X(X_transformed)
+
+        # make sure X_transformed has the right number of components
+        if X_transformed.shape[1] != self.components.shape[1]:
+            raise ValueError(f'mismatch between number of components in X_transformed ({X_transformed.shape[1]}) and number of components ({self.components.shape[1]})')
             
         # project back onto original space
         X_original = (X_transformed @ self.components.T) + self.mean

@@ -42,7 +42,7 @@ class LinearRegressionModel():
         X_intercept = np.concat([intercept_column, X], axis=1)
         return X_intercept
 
-    def fit(self, X, y, check_condition=True, condition_threshold=1e8):
+    def fit(self, X: np.ndarray, y: np.ndarray, check_condition=True, condition_threshold=1e8):
         """Fits linear regression model to input data
         
         Args:
@@ -84,7 +84,7 @@ class LinearRegressionModel():
 
         self.fitted = True
 
-    def __call__(self, X):
+    def __call__(self, X: np.ndarray):
         """Predicts target variable for input data
 
         Args:
@@ -108,7 +108,7 @@ class LinearRegressionModel():
 
         return y_hat
 
-    def r_squared(self, X, y):
+    def r_squared(self, X: np.ndarray, y: np.ndarray):
         """Computes R^2 value for model on input data
 
         Args:
