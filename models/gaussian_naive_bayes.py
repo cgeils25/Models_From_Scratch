@@ -1,6 +1,6 @@
 import numpy as np
 
-class GaussianNaiveBayes:
+class GaussianNaiveBayesClassifer:
     def __init__(self):
         """
         A Naive Bayes classifier which calculates probabilities of each class given features using a Gaussian distribution
@@ -129,7 +129,7 @@ class GaussianNaiveBayes:
             
             p_x_given_y_vals[:, i] = p_x_given_y_val
 
-        # I have no idea if I did this right
+        # calculate P(y_val | x) = P(x | y_val) * P(y_val) / (sum(P(x | y) * P(y)) for all y_vals)
         p_y_vals_given_x = (p_x_given_y_vals * self.prior_probabilities) / \
         (p_x_given_y_vals @ self.prior_probabilities).reshape(p_x_given_y_vals.shape[0], 1)
 

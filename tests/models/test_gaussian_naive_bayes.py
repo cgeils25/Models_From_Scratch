@@ -1,4 +1,4 @@
-from models import GaussianNaiveBayes
+from models import GaussianNaiveBayesClassifer
 import numpy as np
 
 def test_fit_binary():
@@ -6,7 +6,7 @@ def test_fit_binary():
     X = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
     y = np.array([0, 1, 0, 1])
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
     
@@ -27,7 +27,7 @@ def test_fit_multiclass():
     X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12]])
     y = np.array([0, 1, 2, 0, 1, 2])
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -53,7 +53,7 @@ def test_calculate_posterior_probability_one_class():
     X = np.random.normal(0, 1, 1000).reshape(-1, 1)
     dummy_y = np.zeros(shape=1000)
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, dummy_y)
 
@@ -71,7 +71,7 @@ def test_calculate_posterior_probability_binary():
     # shift samples of class 1 by 100. Because we're moving it 100 standard deviations away from class 0 model should be able to classify it easily
     X[y==1] += 100
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -88,7 +88,7 @@ def test_call_one_class():
     X = rng.normal(0, 1, 1000).reshape(-1, 1)
     dummy_y = np.zeros(shape=1000)
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, dummy_y)
 
@@ -107,7 +107,7 @@ def test_call_binary():
     # shift samples of class 1 by 100. Because we're moving it 100 standard deviations away from class 0 model should be able to classify it easily
     X[y==1] += 100
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -127,7 +127,7 @@ def test_call_multiclass():
     X[y==1] += 100
     X[y==2] -= 100
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -143,7 +143,7 @@ def test_accuracy_one_class():
     X = rng.normal(0, 1, 1000).reshape(-1, 1)
     dummy_y = np.zeros(shape=1000)
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, dummy_y)
 
@@ -165,7 +165,7 @@ def test_accuracy_binary():
     # shift samples of class 1 by 100. Because we're moving it 100 standard deviations away from class 0 model should be able to classify it easily
     X[y==1] += 100
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -188,7 +188,7 @@ def test_accuracy_multiclass():
     X[y==1] += 100
     X[y==2] -= 100
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -220,7 +220,7 @@ def test_model_multiclass_multiple_features():
     X[y==1] += 100
     X[y==2] -= 100
 
-    model = GaussianNaiveBayes()
+    model = GaussianNaiveBayesClassifer()
 
     model.fit(X, y)
 
@@ -233,3 +233,4 @@ def test_model_multiclass_multiple_features():
     # ensure accuracy calculated correctly
     assert np.all(y_hat == y), 'predictions not calculated correctly for multiclass classification'
     assert accuracy == np.mean(y_hat == y), 'accuracy not calculated correctly for binary classification'
+    
