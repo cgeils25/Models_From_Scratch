@@ -1,6 +1,5 @@
 import numpy as np
 from models.model_utils import get_condition_number
-import pdb
 
 # singular matrix
 X_singular = np.array([[1, 1], [1, 1]])
