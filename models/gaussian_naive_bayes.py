@@ -3,7 +3,7 @@ import numpy as np
 class GaussianNaiveBayesClassifer:
     def __init__(self):
         """
-        A Naive Bayes classifier which calculates probabilities of each class given features using a Gaussian distribution
+        A Naive Bayes classifier which calculates probabilities of each class given a sample's features using a Gaussian distribution
         """
         # means and standard deviations obtained from training data: used for gaussian pdf
         # shape: number of features, number of y-values
