@@ -19,7 +19,7 @@ def _validate_X_y(X=None, y=None):
             raise ValueError(f'Number of samples in X must match number of samples in y (X.shape[0] = {X.shape[0]}, y.shape[0] = {y.shape[0]})')
 
 
-def split_dataset(X, y, test_size=0.2, shuffle=True):
+def split_dataset(X: np.ndarray, y: np.ndarray, test_size=0.2, shuffle=True):
     """Split dataset into training and testing sets
 
     Args:
