@@ -40,8 +40,6 @@ class GaussianNaiveBayesClassifer:
               raise TypeError('y must be a numpy array')
             if y.ndim != 1:
               raise ValueError(f'y must be a 1D array of shape (num_samples, ), instead got {y.shape}')
-            if not np.all(np.unique(y) == np.arange(np.unique(y).shape[0])):
-                raise ValueError(f'unique values in y must be ordered counting from 0: [0, 1, 2 ...], instead got {np.unique(y)}')
 
         if y is not None and X is not None:
             if X.shape[0] != y.shape[0]:
@@ -64,6 +62,9 @@ class GaussianNaiveBayesClassifer:
             y (np.ndarray): target data of shape (num_samples, )
         """
         self._validate_X_y(X, y)
+
+        if not np.all(np.unique(y) == np.arange(np.unique(y).shape[0])):
+            raise ValueError(f'unique values in y must be ordered counting from 0: [0, 1, 2 ...], instead got {np.unique(y)}')
         
         self.y_vals = np.unique(y)
         self.means = np.empty(shape=(self.y_vals.shape[0], X.shape[1]))
@@ -133,6 +134,10 @@ class GaussianNaiveBayesClassifer:
         p_y_vals_given_x = (p_x_given_y_vals * self.prior_probabilities) / \
         (p_x_given_y_vals @ self.prior_probabilities).reshape(p_x_given_y_vals.shape[0], 1)
 
+        if np.any((p_x_given_y_vals @ self.prior_probabilities).reshape(p_x_given_y_vals.shape[0], 1) == 0):
+            raise ValueError('''Total probability of evidence is 0 for some samples. This will result in division by zero 
+            and nan values in posterior probabilities. Can be due to large class imbalance: consider downsampling or upsampling''')
+
         # more sanity checks
         assert p_y_vals_given_x.shape == p_x_given_y_vals.shape, 'posterior probabilities shape does not match conditional'
         assert np.allclose(p_y_vals_given_x.sum(axis=1), 1), 'posterior probabilities do not sum to 1 for all samples'
@@ -176,7 +181,7 @@ class GaussianNaiveBayesClassifer:
             p_correct (float): proportion of correct predictions
         """
         self._validate_X_y(X, y)
-        
+
         y_hat = self.__call__(X)
 
         p_correct = (y == y_hat).mean()
