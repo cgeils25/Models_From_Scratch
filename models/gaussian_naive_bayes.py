@@ -96,6 +96,30 @@ class GaussianNaiveBayesClassifer:
 
         self.fitted = True
 
+    def _calculate_joint_probability(self, X: np.ndarray):
+        '''Calculate likelihood of input data given each class. Assumes conditional independence of features. 
+        Shape is of returned matrix p_x_given_y_vals is (num_samples, num_y_values)
+        where rows correspond to samples and columns correspond to y-values
+        '''
+        # shape is (number of samples, number of unique targets)
+        p_x_given_y_vals = np.empty(shape=(X.shape[0], self.y_vals.shape[0]))
+
+        # iterate over means, standard deviations, and corresponding y-values to compute P(x | y_val)
+        for i, (mean, std, y_val) in enumerate(zip(self.means, self.stds, self.y_vals)):
+            # independent probabilities for each feature given y_val
+            p_feature_given_y_val = self._calculate_gaussian_probability(X, mean, std)
+
+            # sanity checks
+            assert p_feature_given_y_val.shape == X.shape, 'feature probabilities shape does not match X shape'
+
+            # assume conditional independence, so P(A) and P(B) and ... = P(A) * P(B) * ...
+            p_x_given_y_val = np.prod(p_feature_given_y_val, axis=1)
+            
+            p_x_given_y_vals[:, i] = p_x_given_y_val
+        
+        return p_x_given_y_vals
+        
+
     def calculate_posterior_probability(self, X: np.ndarray):
         """Calculate probability of each class given input data (aka posterior probability)
 
@@ -114,21 +138,8 @@ class GaussianNaiveBayesClassifer:
             
         self._validate_X_y(X)
         
-        # shape is (number of samples, number of unique targets)
-        p_x_given_y_vals = np.empty(shape=(X.shape[0], self.y_vals.shape[0]))
-
-        # iterate over means, standard deviations, and corresponding y-values to compute P(x | y_val)
-        for i, (mean, std, y_val) in enumerate(zip(self.means, self.stds, self.y_vals)):
-            # independent probabilities for each feature given y_val
-            p_feature_given_y_val = self._calculate_gaussian_probability(X, mean, std)
-
-            # sanity checks
-            assert p_feature_given_y_val.shape == X.shape, 'feature probabilities shape does not match X shape'
-
-            # assume conditional independence, so P(A) and P(B) and ... = P(A) * P(B) * ...
-            p_x_given_y_val = np.prod(p_feature_given_y_val, axis=1)
-            
-            p_x_given_y_vals[:, i] = p_x_given_y_val
+        # get joint probability of each sample given each class
+        p_x_given_y_vals = self._calculate_joint_probability(X)
 
         # calculate P(y_val | x) = P(x | y_val) * P(y_val) / (sum(P(x | y) * P(y)) for all y_vals)
         p_y_vals_given_x = (p_x_given_y_vals * self.prior_probabilities) / \
@@ -162,10 +173,11 @@ class GaussianNaiveBayesClassifer:
         self._validate_X_y(X)
 
         # get probabilities of each y-value given features
-        posterior_probabilities = self.calculate_posterior_probability(X)
+        joint_probabilities = self._calculate_joint_probability(X)
+        # can make predictions based on joint probabilities because P(x) (the divisor for posteriors) is constant for all y-values
 
         # predicted y-value is the one with the highest P(y | x)
-        y_hat = np.argmax(posterior_probabilities, axis=1)
+        y_hat = np.argmax(joint_probabilities, axis=1)
         # can do argmax here because _validate_X_y forces unique y-values to be like [0, 1, 2...]
 
         return y_hat
