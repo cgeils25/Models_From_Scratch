@@ -175,6 +175,8 @@ class GaussianNaiveBayesClassifer:
         Returns:
             p_correct (float): proportion of correct predictions
         """
+        self._validate_X_y(X, y)
+        
         y_hat = self.__call__(X)
 
         p_correct = (y == y_hat).mean()
