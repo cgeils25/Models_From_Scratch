@@ -233,4 +233,78 @@ def test_model_multiclass_multiple_features():
     # ensure accuracy calculated correctly
     assert np.all(y_hat == y), 'predictions not calculated correctly for multiclass classification'
     assert accuracy == np.mean(y_hat == y), 'accuracy not calculated correctly for binary classification'
-    
+
+def test_precision_one_class():
+    # create toy single class data drawn from normal distribution
+    rng = np.random.default_rng(seed = 0)
+    X = rng.normal(0, 1, 1000).reshape(-1, 1)
+    dummy_y = np.zeros(shape=1000)
+
+    model = GaussianNaiveBayesClassifer()
+
+    model.fit(X, dummy_y)
+
+    # calculate precision
+    precision = model.precision(X, dummy_y)
+
+    # precision should 1 because there is only one class
+    assert precision == 1, 'precision not calculated correctly for one class'
+
+def test_precision_binary():
+    # create toy binary classification data drawn from normal distribution
+    rng = np.random.default_rng(seed = 0)
+    X = rng.normal(0, 1, 1000).reshape(-1, 1)
+    y = rng.choice([0, 1], size=1000)
+
+    # shift samples of class 1 by 100. Because we're moving it 100 standard deviations away from class 0 model should be able to classify it easily
+    X[y==1] += 100
+
+    model = GaussianNaiveBayesClassifer()
+
+    model.fit(X, y)
+
+    # calculate precision
+    precision = model.precision(X, y)
+
+    # precision should be 1 because classes are perfectly separated
+    assert precision == 1, 'precision not calculated correctly for binary classification'
+
+def test_precision_multiclass_no_average():
+    # create toy multiclass classification data drawn from normal distribution
+    rng = np.random.default_rng(seed = 0)
+    X = rng.normal(0, 1, 1000).reshape(-1, 1)
+    y = rng.choice([0, 1, 2], size=1000)
+
+    # shift samples of class 1 by 100 and samples of class 2 by -100. Because we're moving them 100 standard deviations away from class 0 model should be able to classify them easily
+    X[y==1] += 100
+    X[y==2] -= 100
+
+    model = GaussianNaiveBayesClassifer()
+
+    model.fit(X, y)
+
+    # calculate precision, don't average precision for each class
+    precision = model.precision(X, y, average = False)
+
+    # precision should be 1 because classes are perfectly separated
+    assert np.all(precision == np.array([1, 1, 1])), 'precision not calculated correctly for multiclass classification (no average)'
+
+def test_precision_multiclass_average():
+        # create toy multiclass classification data drawn from normal distribution
+    rng = np.random.default_rng(seed = 0)
+    X = rng.normal(0, 1, 1000).reshape(-1, 1)
+    y = rng.choice([0, 1, 2], size=1000)
+
+    # shift samples of class 1 by 100 and samples of class 2 by -100. Because we're moving them 100 standard deviations away from class 0 model should be able to classify them easily
+    X[y==1] += 100
+    X[y==2] -= 100
+
+    model = GaussianNaiveBayesClassifer()
+
+    model.fit(X, y)
+
+    # calculate precision, don't average precision for each class
+    precision = model.precision(X, y, average = True)
+
+    # precision should be 1 because classes are perfectly separated
+    assert precision == 1, 'precision not calculated correctly for multiclass classification (with average)'
