@@ -246,7 +246,7 @@ class GaussianNaiveBayesClassifer:
         Args:
             X (np.ndarray): input data of shape (num_samples, num_features)
             y (np.ndarray): target data of shape (num_samples, )
-            average (bool): whether to average precision across classes. Only applies to multiclass classification
+            average (bool): whether to take a macro-average of precision across classes. Only applies to multiclass classification
 
         Returns:
             precision (float): proportion of true positive predictions
@@ -270,3 +270,77 @@ class GaussianNaiveBayesClassifer:
                 return self._precision_multiclass(X, y).mean()
             # return array of precisions for each class
             return self._precision_multiclass(X, y)
+    
+    def _recall_binary(self, X: np.ndarray, y: np.ndarray):
+        # compute recall for binary classification
+        y_hat = self.__call__(X)
+        
+        positive_mask = y == 1
+
+        num_true_positive = (y_hat[positive_mask] == y[positive_mask]).sum()
+
+        num_false_negative = (y_hat[positive_mask] != y[positive_mask]).sum()
+
+        recall = num_true_positive / (num_true_positive + num_false_negative)
+
+        return recall
+
+    def _recall_multiclass(self, X: np.ndarray, y: np.ndarray):
+        # compute recall for multiclass classification
+        y_hat = self.__call__(X)
+
+        # recall for each class
+        recalls = np.empty(shape=(self.y_vals.shape[0]))
+
+        # iterate through classes to calculate recall
+        for i, y_val in enumerate(self.y_vals):
+            y_val_mask = y == y_val
+
+            num_true_positive = (y[y_val_mask] == y_hat[y_val_mask]).sum()
+
+            num_false_negative = (y_hat[y_val_mask] != y[y_val_mask]).sum()
+
+            recall = num_true_positive / (num_true_positive + num_false_negative)
+
+            recalls[i] = recall
+
+        return recalls
+
+    def recall(self, X: np.ndarray, y: np.ndarray, average=False):
+        """Computes recall of model on input data.
+
+        For binary classification: Recall = TP / (TP + FN) where TP = true positive, FN = false negative
+
+        For multiclass classification: Recall = TP / (TP + FN) for each class. Optionally average across classes.
+
+        Interpretation: If a sample belongs to a given positive class, we expect the model to correctly identify it [recall] % of the time.
+
+        Args:
+            X (np.ndarray): input data of shape (num_samples, num_features)
+            y (np.ndarray): target data of shape (num_samples, )
+            average (bool): whether to take a macro-average of recall across classes. Only applies to multiclass classification
+
+        Returns:
+            recall (float): proportion of true positive predictions
+            If multiclass classification and average is True, returns average recall across classes.
+            Otherwise, returns array of recalls for each class. Index corresponds to class value (ex: 0, 1, 2, ...)
+        """
+        self._validate_X_y(X, y)
+
+        # single class case
+        if self.y_vals.shape[0] == 1:
+            return 1
+
+        # binary case
+        elif self.y_vals.shape[0] == 2:
+            return self._recall_binary(X, y)
+        
+        # multiclass case
+        elif self.y_vals.shape[0] > 2:
+            if average:
+                # return average recall across classes 
+                return np.mean(self._recall_multiclass(X, y))
+            # return array of recalls for each class
+            return self._recall_multiclass(X, y)
+
+
