@@ -119,7 +119,6 @@ class GaussianNaiveBayesClassifer:
         
         return p_x_given_y_vals
         
-
     def calculate_posterior_probability(self, X: np.ndarray):
         """Calculate probability of each class given input data (aka posterior probability)
 
@@ -147,7 +146,7 @@ class GaussianNaiveBayesClassifer:
 
         if np.any((p_x_given_y_vals @ self.prior_probabilities).reshape(p_x_given_y_vals.shape[0], 1) == 0):
             raise ValueError('''Total probability of evidence is 0 for some samples. This will result in division by zero 
-            and nan values in posterior probabilities. Can be due to large class imbalance: consider downsampling or upsampling''')
+            and nan values in posterior probabilities. Can be due to large class imbalance.''')
 
         # more sanity checks
         assert p_y_vals_given_x.shape == p_x_given_y_vals.shape, 'posterior probabilities shape does not match conditional'
@@ -199,3 +198,75 @@ class GaussianNaiveBayesClassifer:
         p_correct = (y == y_hat).mean()
 
         return p_correct
+
+    def _precision_binary(self, X: np.ndarray, y: np.ndarray):
+        # compute precision on positive class for binary classification
+        y_hat = self.__call__(X)
+
+        positive_mask = y == 1
+
+        num_true_positive = (y[positive_mask] == y_hat[positive_mask]).sum()
+
+        num_positive = (y_hat == 1).sum() # aka TP + FP
+
+        precision = num_true_positive / num_positive
+
+        return precision
+
+    def _precision_multiclass(self, X: np.ndarray, y: np.ndarray):
+        # compute precision for multiclass classification
+        y_hat = self.__call__(X)
+
+        # precision for each class
+        precisions = np.empty(shape=(self.y_vals.shape[0]))
+
+        # iterate through classes to calculate precision
+        for i, y_val in enumerate(self.y_vals):
+            y_val_mask = y == y_val
+
+            num_true_positive = (y[y_val_mask] == y_hat[y_val_mask]).sum()
+
+            num_positive = (y_hat == y_val).sum()
+
+            precision = num_true_positive / num_positive
+
+            precisions[i] = precision
+
+        return precisions
+    
+    def precision(self, X: np.ndarray, y: np.ndarray, average = False):
+        """Computes precision of model on input data.
+
+        For binary classification: Precision = TP / (TP + FP) where TP = true positive, FP = false positive
+
+        For multiclass classification: Precision = TP / (TP + FP) for each class. Optionally average across classes.
+
+        Interpretation: If the model predicts a sample is a given positive class, we expect the model to be correct [precision] % of the time. 
+
+        Args:
+            X (np.ndarray): input data of shape (num_samples, num_features)
+            y (np.ndarray): target data of shape (num_samples, )
+            average (bool): whether to average precision across classes. Only applies to multiclass classification
+
+        Returns:
+            precision (float): proportion of true positive predictions
+            If multiclass classification and average is True, returns average precision across classes.
+            Otherwise, returns array of precisions for each class. Index corresponds to class value (ex: 0, 1, 2, ...)
+        """
+        self._validate_X_y(X, y)
+
+        # single class case
+        if self.y_vals.shape[0] == 1:
+            return 1
+
+        # binary case
+        elif self.y_vals.shape[0] == 2:
+            return self._precision_binary(X, y)
+
+        # multiclass case
+        elif self.y_vals.shape[0] > 2:
+            if average:
+                # return average precision across classes
+                return self._precision_multiclass(X, y).mean()
+            # return array of precisions for each class
+            return self._precision_multiclass(X, y)
