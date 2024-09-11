@@ -343,4 +343,25 @@ class GaussianNaiveBayesClassifer:
             # return array of recalls for each class
             return self._recall_multiclass(X, y)
 
+    def f1_score(self, X: np.ndarray, y: np.ndarray):
+        """Computes F1 score of model on input data. F1 score is the harmonic mean of precision and recall.
 
+        F1 = 2 * (precision * recall) / (precision + recall)
+
+        for multiclass, automatically averages precision and recall to compute F1 score
+
+        Args:
+            X (np.ndarray): input data of shape (num_samples, num_features)
+            y (np.ndarray): target data of shape (num_samples, )
+
+        Returns:
+            f1 (float): F1 score of model
+        """
+        self._validate_X_y(X, y)
+
+        precision = self.precision(X, y, average=True)
+        recall = self.recall(X, y, average=True)
+
+        f1 = 2 * (precision * recall) / (precision + recall)
+
+        return f1
