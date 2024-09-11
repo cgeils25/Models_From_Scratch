@@ -2,6 +2,9 @@ import numpy as np
 import warnings
 
 class PCA:
+    """
+    Principal Component Analysis (PCA) for dimensionality reduction
+    """
     def __init__(self, num_components: int = None, p_variance: float = None):
         """Principal Component Analysis (PCA) for dimensionality reduction
 

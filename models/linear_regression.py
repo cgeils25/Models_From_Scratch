@@ -2,6 +2,9 @@ import numpy as np
 from models.model_utils import get_condition_number
 
 class LinearRegressionModel():
+    """
+    A linear regression model
+    """
     def __init__(self):
         """
         A linear regression model

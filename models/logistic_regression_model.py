@@ -3,6 +3,9 @@ from tqdm import tqdm
 import warnings
 
 class LogisticRegressionModel():
+    """
+    A Logistic Regression model. Currently only supported for binary classification with an arbitrary number of features.
+    """
     def __init__(self):
         """
         A Logistic Regression model. Currently only supported for binary classification with an arbitrary number of features. 

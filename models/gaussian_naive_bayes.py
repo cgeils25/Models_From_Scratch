@@ -1,6 +1,9 @@
 import numpy as np
 
 class GaussianNaiveBayesClassifer:
+    """
+    A Naive Bayes classifier which calculates class probabilities assuming a gaussian distribution for each feature
+    """
     def __init__(self):
         """
         A Naive Bayes classifier which calculates probabilities of each class given a sample's features using a Gaussian distribution

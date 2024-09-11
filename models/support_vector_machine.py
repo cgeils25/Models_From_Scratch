@@ -8,6 +8,9 @@ def is_less_or_close(a, b, rtol=1e-5, atol=1e-8):
     return np.logical_or(a < b, np.isclose(a, b, rtol=rtol, atol=atol))
 
 class SupportVectorMachine():
+    """
+    A support vector machine model. Currently only supports binary classification with linear kernel.
+    """
     def __init__(self, task='classification'):
         """A support vector machine model. Currently only supports binary classification with linear kernel.
 
