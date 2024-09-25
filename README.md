@@ -12,9 +12,37 @@ Would I ever use these models in practice? Definitely not, as my implementations
 # No NumPy someday?
 Because my models only use basic matrix operations via NumPy, I would like to eventually write my own low-level replacement (with an identical API) in either C or Rust which I can substitute in, so that this will truly be "from scratch". 
 
+# Building environment
+I use conda to manage dependencies. You can build a suitable package environment for this project with:
+
+``
+conda create -n models_from_scratch_env --file requirements.txt 
+``
+
+Then, activate the environment with:
+
+``
+conda activate models_from_scratch_env
+``
+
+
 # Testing
-I'll also write unit tests for all models and utility functions using pytest. My basic approach for writing these tests is to define use cases which I know to be mathematically true (ex. a singular matrix has a condition number of infinity / Nan), and then check that my code satisfies them.
+I'll also write unit tests for all models and utility functions using pytest. My basic approach for writing these tests is to define use cases *which I know to be mathematically true* (ex. a singular matrix has a condition number of infinity / Nan), and then check that my code satisfies them. 
+
+Unit tests can be run with:
+
+``
+pytest
+``
 
 # Project Structure
-You can see how I've applied each model to real and toy datasets along with their respective READMEs in 'notebooks_and_readmes'. The source code for models can be seen in 'models', and their corresponding unit tests can be found in 'tests'. For tests, the structure will mirror the structure of the project as a whole (ex. the unit tests for models are found in tests/models). 
+
+- `models/`: source code for all models
+- `notebooks_and_readmes/`: notebooks applying models to toy and real datasets along with associated READMEs explaining the math/theory/my implementation. 
+  - `gaussian_naive_bayes/`: Used gaussian naive bayes model to <u>classify breast cancer as benign vs malignant</u> and <u>credit card charges as fraudulent vs valid</u>
+  - `linear_regression/`: linear regression model *and* principal component analysis. Used them together to predict <u> ground state molecular energies based on intermolecular Coulomb repulsion operators</u> 
+  - `logistic_regression/`: Used logistic regression model to <u>classify patients as diabetic vs non-diabetic</u>
+  - `support_vector_machine/`: Used a linear support vectors machine (implemented with sequential minimal optimization) to <u>detect credit card users at risk of default</u>
+- `tests/`: unit tests. Structure of test directories mirrors structure of project as a whole
+- `utils/`: extra data and visualization utility functions
 
