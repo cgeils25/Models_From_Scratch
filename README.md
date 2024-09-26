@@ -15,15 +15,15 @@ Because my models only use basic matrix operations via NumPy, I would like to ev
 # Building environment
 I use conda to manage dependencies. You can build a suitable package environment for this project with:
 
-``
+```bash
 conda create -n models_from_scratch_env --file requirements.txt 
-``
+```
 
 Then, activate the environment with:
 
-``
+```bash
 conda activate models_from_scratch_env
-``
+```
 
 
 # Testing
@@ -31,9 +31,9 @@ I'll also write unit tests for all models and utility functions using pytest. My
 
 Unit tests can be run with:
 
-``
+```bash
 pytest
-``
+```
 
 # Project Structure
 
