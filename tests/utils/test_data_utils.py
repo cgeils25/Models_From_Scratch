@@ -17,3 +17,22 @@ def test_split_dataset():
     assert np.array_equal(X_test, np.array([[9, 10]]))
     assert np.array_equal(y_test, np.array([0]))
 
+def test_split_dataset_seeded():
+    # test that using the same seed produces the same result
+    X_1 = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]])
+    y_1 = np.array([0, 1, 0, 1, 0])
+    X_2 = X_1.copy()
+    y_2 = y_1.copy()
+
+    X_train_1, y_train_1, X_test_1, y_test_1 = split_dataset(X_1, y_1, test_size=0.2, shuffle=True, seed=1738)
+    X_train_2, y_train_2, X_test_2, y_test_2 = split_dataset(X_2, y_2, test_size=0.2, shuffle=True, seed=1738)
+
+    assert X_train_1.shape == X_train_2.shape == (4, 2)
+    assert y_train_1.shape == y_train_2.shape == (4, )
+    assert X_test_1.shape == X_test_2.shape == (1, 2)
+    assert y_test_1.shape == y_test_2.shape == (1, )
+
+    assert np.array_equal(X_train_1, X_train_2)
+    assert np.array_equal(y_train_1, y_train_2)
+    assert np.array_equal(X_test_1, X_test_2)
+    assert np.array_equal(y_test_1, y_test_2)

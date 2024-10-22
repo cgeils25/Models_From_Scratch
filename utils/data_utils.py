@@ -19,7 +19,7 @@ def _validate_X_y(X=None, y=None):
             raise ValueError(f'Number of samples in X must match number of samples in y (X.shape[0] = {X.shape[0]}, y.shape[0] = {y.shape[0]})')
 
 
-def split_dataset(X: np.ndarray, y: np.ndarray, test_size=0.2, shuffle=True):
+def split_dataset(X: np.ndarray, y: np.ndarray, test_size=0.2, shuffle=True, seed=None):
     """Split dataset into training and testing sets
 
     Args:
@@ -36,7 +36,11 @@ def split_dataset(X: np.ndarray, y: np.ndarray, test_size=0.2, shuffle=True):
     conjoined = np.concatenate([X, y.reshape(-1, 1)], axis=1)
 
     if shuffle:
-        np.random.shuffle(conjoined)
+        if seed is not None:
+            rng = np.random.default_rng(seed=seed)
+            rng.shuffle(conjoined)
+        else:
+            np.random.shuffle(conjoined)
 
     split_idx = int(X.shape[0] * (1 - test_size))
     conjoined_train = conjoined[:split_idx]
