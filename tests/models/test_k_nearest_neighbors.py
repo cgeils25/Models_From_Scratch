@@ -27,7 +27,6 @@ def test_KNN_binary_all_same():
         assert np.all(y_hat == y), f'all binary predictions should be positive (1) for all values of k (failed for {k})'
         assert model.accuracy(X, y, k=k) == 1.0, f'accuracy should be 100% for all values of k (failed for {k})'
 
-
 def test_binary_one_neighbor():
     # because no train/test split and k=1, predictions should be 100% accurate
     X = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
@@ -81,4 +80,3 @@ def test_multiclass_all_same():
         assert y_hat.shape == y.shape, f'predictions should have the same shape as y (failed for {k})' # technically redundant but easier to debug
         assert np.all(y_hat == y), f'all multiclass predictions should be the same for all values of k (failed for {k})'
         assert model.accuracy(X, y, k=k) == 1.0, f'accuracy should be 100% for all values of k (failed for {k})'
-
