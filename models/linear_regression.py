@@ -78,7 +78,12 @@ class LinearRegressionModel():
 
         # fit model
         try:
-            beta_hat = np.linalg.inv(X_intercept.T @ X_intercept) @ X_intercept.T @ y
+            # QR decomposition
+            Q, R = np.linalg.qr(X_intercept)
+
+            # more efficient solution
+            beta_hat = np.linalg.solve(R, Q.T @ y)
+            
         except np.linalg.LinAlgError as e:
             raise ValueError('X.T @ X is singular.')
 
