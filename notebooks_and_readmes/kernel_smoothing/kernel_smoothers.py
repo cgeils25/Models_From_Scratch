@@ -181,6 +181,12 @@ def update(val):
 
 k_slider.on_changed(update)
 
+ax.legend()
+
 assert False , 'add in a bar to show MSE or something. could do train and test to show difference'
+
+assert False , 'could also add in a chart to show difference between true function and model over the x-axis'
+
+assert False, 'plotly would work well for this if putting into a medium article'
 
 plt.show()
