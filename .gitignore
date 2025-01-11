@@ -10,3 +10,5 @@ notebooks_and_readmes/linear_regression/datasets/roboBohr.csv
 gnb_junk/
 notebooks_and_readmes/gaussian_naive_bayes/datasets/creditcard.csv
 KNN_junk/
+notebooks_and_readmes/kernel_smoothing/plots
+
