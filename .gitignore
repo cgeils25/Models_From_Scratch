@@ -11,4 +11,5 @@ gnb_junk/
 notebooks_and_readmes/gaussian_naive_bayes/datasets/creditcard.csv
 KNN_junk/
 notebooks_and_readmes/kernel_smoothing/plots
-
+medium_plots
+shell_scripts
